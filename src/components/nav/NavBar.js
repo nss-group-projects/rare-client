@@ -1,39 +1,63 @@
-import React from "react"
+import React, { useRef } from "react"
 import { Link, useHistory } from "react-router-dom"
 import "./NavBar.css"
 import Logo from "./rare.jpeg"
 
-export const NavBar = () => {
+export const NavBar = ({ token, setToken }) => {
   const history = useHistory()
+  const navbar = useRef()
+  const hamburger = useRef()
+
+  const showMobileNavbar = () => {
+    hamburger.current.classList.toggle('is-active')
+    navbar.current.classList.toggle('is-active')
+  }
 
   return (
-    <ul className="navbar">
-      <li className="navbar__item">
-        <img className="navbar__logo" src={Logo} />
-      </li>
-      <li className="navbar__item">
-        <Link className="navbar__link" to="/">Posts</Link>
-      </li>
-      {
-        (localStorage.getItem("token") !== null) ?
-          <li className="nav-item">
-            <button className="nav-link fakeLink"
-              onClick={() => {
-                localStorage.removeItem("rare_user_id")
-                history.push({ pathname: "/" })
-              }}
-            >Logout</button>
-          </li> 
-          :
-          <>
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">Login</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/register">Register</Link>
-            </li>
-          </>
-      }        
-    </ul>
+    <nav className="navbar is-success mb-3" role="navigation" aria-label="main navigation">
+      <div className="navbar-brand">
+        <a className="navbar-item" href="/">
+          <img src={Logo} height="3rem" /> <h1 className="title is-4">Rare Publishing</h1>
+        </a>
+
+        <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" onClick={showMobileNavbar} ref={hamburger}>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div className="navbar-menu" ref={navbar}>
+        <div className="navbar-start">
+          {
+            token
+              ?
+              <Link to="/" className="navbar-item">Posts</Link>
+              :
+              ""
+          }
+        </div>
+
+        <div className="navbar-end">
+          <div className="navbar-item">
+            <div className="buttons">
+              {
+                token
+                  ?
+                  <button className="button is-outlined" onClick={() => {
+                    setToken('')
+                    history.push('/login')
+                  }}>Logout</button>
+                  :
+                  <>
+                    <Link to="/register" className="button is-link">Register</Link>
+                    <Link to="/login" className="button is-outlined">Login</Link>
+                  </>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
   )
 }
