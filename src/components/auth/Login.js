@@ -1,11 +1,11 @@
-import React, { useRef, useState } from "react"
-import { Link, useHistory } from "react-router-dom"
-import { loginUser } from "./AuthManager"
+import { useRef, useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { loginUser } from "../../managers/AuthManager"
 
 export const Login = ({ setToken }) => {
   const username = useRef()
   const password = useRef()
-  const history = useHistory()
+  const navigate = useNavigate()
   const [isUnsuccessful, setisUnsuccessful] = useState(false)
 
   const handleLogin = (e) => {
@@ -19,7 +19,7 @@ export const Login = ({ setToken }) => {
     loginUser(user).then(res => {
       if ("valid" in res && res.valid) {
         setToken(res.token)
-        history.push("/")
+        navigate("/")
       }
       else {
         setisUnsuccessful(true)

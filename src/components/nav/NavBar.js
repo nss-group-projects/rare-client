@@ -1,10 +1,10 @@
-import React, { useRef } from "react"
-import { Link, useHistory } from "react-router-dom"
+import { useRef } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import "./NavBar.css"
 import Logo from "./rare.jpeg"
 
 export const NavBar = ({ token, setToken }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const navbar = useRef()
   const hamburger = useRef()
 
@@ -17,9 +17,10 @@ export const NavBar = ({ token, setToken }) => {
     <nav className="navbar is-success mb-3" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
         <a className="navbar-item" href="/">
-          <img src={Logo} height="3rem" /> <h1 className="title is-4">Rare Publishing</h1>
+          <img src={Logo} height="3rem" alt="Rare Logo" /> <h1 className="title is-4">Rare Publishing</h1>
         </a>
 
+        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
         <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" onClick={showMobileNavbar} ref={hamburger}>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -46,7 +47,7 @@ export const NavBar = ({ token, setToken }) => {
                   ?
                   <button className="button is-outlined" onClick={() => {
                     setToken('')
-                    history.push('/login')
+                    navigate('/login')
                   }}>Logout</button>
                   :
                   <>

@@ -1,14 +1,12 @@
+import { createRoot } from "react-dom/client"
+import { BrowserRouter } from "react-router-dom"
+import { Rare } from "./Rare"
 import "./index.css"
-import React from "react"
-import ReactDOM from "react-dom"
-import { BrowserRouter as Router } from "react-router-dom"
-import { Rare } from "./components/Rare.js"
 
-ReactDOM.render(
-	<React.StrictMode>
-		<Router>
-			<Rare />
-		</Router>
-	</React.StrictMode>,
-	document.getElementById("root")
+const container = document.getElementById("root")
+const root = createRoot(container)
+root.render(
+    <BrowserRouter>
+        <Rare />
+    </BrowserRouter>
 )

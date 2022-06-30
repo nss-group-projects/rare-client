@@ -1,7 +1,7 @@
-import React, { useRef } from "react"
+import { useRef } from "react"
 import { Link } from "react-router-dom"
-import { useHistory } from "react-router-dom"
-import { registerUser } from "./AuthManager"
+import { useNavigate } from "react-router-dom"
+import { registerUser } from "../../managers/AuthManager"
 
 export const Register = ({setToken}) => {
   const firstName = useRef()
@@ -12,7 +12,7 @@ export const Register = ({setToken}) => {
   const password = useRef()
   const verifyPassword = useRef()
   const passwordDialog = useRef()
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const handleRegister = (e) => {
     e.preventDefault()
@@ -31,7 +31,7 @@ export const Register = ({setToken}) => {
         .then(res => {
           if ("valid" in res && res.valid) {
             setToken(res.token)
-            history.push("/")
+            navigate("/")
           }
         })
     } else {
